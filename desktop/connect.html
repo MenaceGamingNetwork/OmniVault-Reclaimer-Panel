@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; base-uri 'none'">
+    <meta name="color-scheme" content="dark">
+    <title>OmniVault Reclaimer Control</title>
+    <link rel="stylesheet" href="connect.css">
+    <script src="connect.js" defer></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <div class="brand-mark">OV</div>
+        <p class="eyebrow">OMNIVAULT ADMIN</p>
+        <h1>Your Reclaimer servers</h1>
+        <p class="muted">Connect to a server service you own or are authorized to manage.</p>
+      </header>
+
+      <section class="card">
+        <h2>Add a server</h2>
+        <p class="muted">Get the HTTPS address and SHA-256 certificate fingerprint from that server’s agent setup.</p>
+        <form id="connection-form">
+          <label>Display name<input name="label" maxlength="64" required placeholder="My Halo server"></label>
+          <label>HTTPS address<input name="serverOrigin" type="url" required placeholder="https://server.example:8788"></label>
+          <label>SHA-256 certificate fingerprint<input name="certificateFingerprint" required placeholder="64 hexadecimal characters"></label>
+          <button class="primary" type="submit">Save server</button>
+          <p id="form-error" class="error" role="alert" hidden></p>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="list-heading">
+          <h2>Saved servers</h2>
+          <button id="refresh" class="quiet" type="button">Refresh</button>
+        </div>
+        <div id="connection-list" class="connection-list"></div>
+        <p id="empty-state" class="muted">No servers saved yet.</p>
+      </section>
+
+      <p class="security-note">Connections require HTTPS and a matching server certificate fingerprint. Passwords are entered only on the selected server’s own sign-in page.</p>
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </main>
+  </body>
+</html>

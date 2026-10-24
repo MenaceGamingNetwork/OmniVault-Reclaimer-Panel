@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>OmniVault | Reclaimer Control</title>
+    <link rel="stylesheet" href="/panel.css">
+    <script src="/panel.js" defer></script>
+  </head>
+  <body>
+    <main id="auth-screen" class="auth-screen" hidden>
+      <section class="auth-card">
+        <span class="brand-mark auth-mark">OV</span>
+        <p class="eyebrow">OMNIVAULT ADMIN</p>
+        <h1 id="auth-title">Sign in</h1>
+        <p id="auth-description" class="muted">Authenticate to manage your Reclaimer servers.</p>
+        <form id="auth-form" class="stack-form">
+          <label id="auth-password-label" for="auth-password">Admin password
+            <input id="auth-password" name="password" type="password" minlength="12" maxlength="128" autocomplete="current-password" required>
+          </label>
+          <label id="auth-confirm-label" for="auth-confirm-password" hidden>Confirm password
+            <input id="auth-confirm-password" name="confirmPassword" type="password" minlength="12" maxlength="128" autocomplete="new-password">
+          </label>
+          <button id="auth-submit" class="button button-primary" type="submit">Sign in</button>
+          <p id="auth-error" class="auth-error" role="alert" hidden></p>
+        </form>
+      </section>
+    </main>
+    <div id="app-shell" hidden>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="OmniVault Reclaimer Control">
+        <span class="brand-mark">OV</span>
+        <span><strong>OMNIVAULT</strong><small>RECLAIMER CONTROL</small></span>
+      </a>
+      <div class="topbar-right">
+        <span class="local-badge"><span class="dot"></span>SECURE CONSOLE</span>
+        <span id="last-updated" class="muted">Connecting…</span>
+        <a class="button button-quiet download-button" href="/download/windows">Windows app</a>
+        <button id="logout" class="button button-quiet logout-button" type="button">Sign out</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro">
+        <div>
+          <p class="eyebrow">SERVER OPERATIONS</p>
+          <h1>Control room</h1>
+          <p class="muted">Monitor your Reclaimer servers and send supported RCON actions.</p>
+        </div>
+        <button id="refresh" class="button button-secondary" type="button">Refresh status</button>
+      </section>
+
+      <section id="server-list" class="server-grid" aria-label="Server status"></section>
+
+      <section class="workspace">
+        <div class="panel-column">
+          <section class="card">
+            <div class="section-heading">
+              <div><p class="eyebrow">SELECTED SERVER</p><h2 id="selected-name">Loading…</h2></div>
+              <label class="server-picker">Server<select id="server-select"></select></label>
+            </div>
+            <p id="selected-status" class="status-line muted">Waiting for server status…</p>
+            <div class="player-heading"><h3>Connected players</h3><span id="player-count" class="count-badge">—</span></div>
+            <pre id="players" class="player-list">Loading player list…</pre>
+          </section>
+
+          <section class="card">
+            <p class="eyebrow">SERVER CHAT</p>
+            <h2>Broadcast a message</h2>
+            <form id="say-form" class="inline-form">
+              <label class="sr-only" for="message">Message</label>
+              <input id="message" name="message" maxlength="240" required placeholder="Message shown to players">
+              <button class="button button-primary" type="submit">Send message</button>
+            </form>
+          </section>
+        </div>
+
+        <div class="panel-column">
+          <section class="card">
+            <p class="eyebrow">MAP ROTATION</p>
+            <h2>Choose what plays next</h2>
+            <p class="muted">Enter the exact map and optional mode names shown by Reclaimer.</p>
+            <form id="map-form" class="stack-form">
+              <label>Map<input id="map" name="map" list="map-options" maxlength="160" required placeholder="Example: Guardian"><datalist id="map-options"></datalist></label>
+              <label>Mode (optional)<input id="mode" name="mode" list="mode-options" maxlength="160" placeholder="Example: Slayer"><datalist id="mode-options"></datalist></label>
+              <div class="button-row">
+                <button class="button button-secondary" name="action" value="nextmap" type="submit">Set next game</button>
+                <button class="button button-primary" name="action" value="load" type="submit">Load now</button>
+              </div>
+            </form>
+          </section>
+
+          <section id="game-options-card" class="card">
+            <p class="eyebrow">MAP VEHICLE &amp; WEAPON SETS</p>
+            <h2>Configure the next game</h2>
+            <p id="game-options-message" class="muted">Loading the selected preset…</p>
+            <form id="game-options-form" class="stack-form" hidden>
+              <label>Map vehicles
+                <select id="vehicle-set" name="mapVehicles">
+                  <option value="0">Default</option>
+                  <option value="1">None</option>
+                  <option value="2">Mongooses</option>
+                  <option value="3">Light ground</option>
+                  <option value="4">Tanks</option>
+                  <option value="5">Aircraft</option>
+                  <option value="6">No light ground</option>
+                  <option value="7">No tanks</option>
+                  <option value="8">No aircraft</option>
+                  <option value="9">All</option>
+                </select>
+              </label>
+              <label>Map weapons
+                <select id="weapon-set" name="mapWeapons">
+                  <option value="0">Default</option>
+                  <option value="1">Assault rifles</option>
+                  <option value="2">Dual wield</option>
+                  <option value="3">Hammers</option>
+                  <option value="4">Lasers</option>
+                  <option value="5">Rockets</option>
+                  <option value="6">Shotguns</option>
+                  <option value="7">Sniper rifles</option>
+                  <option value="8">Swords</option>
+                  <option value="9">No power weapons</option>
+                  <option value="10">No snipers</option>
+                  <option value="11">No weapons</option>
+                  <option value="12">Random</option>
+                  <option value="13">ODST weapons</option>
+                </select>
+              </label>
+              <button class="button button-primary" type="submit">Apply to next game</button>
+            </form>
+          </section>
+
+          <section class="card">
+            <p class="eyebrow">PLAYER MODERATION</p>
+            <h2>Manage a player</h2>
+            <form id="moderation-form" class="stack-form">
+              <label>Player name or ID<input id="player" name="player" maxlength="120" required placeholder="Player name or ID"></label>
+              <div class="form-grid">
+                <label>Ban duration<input id="duration" name="duration" value="30m" maxlength="12" placeholder="30m, 12h, 7d"></label>
+                <label>Reason (optional)<input id="reason" name="reason" maxlength="240" placeholder="Reason"></label>
+              </div>
+              <div class="button-row">
+                <button class="button button-secondary" name="action" value="kick" type="submit">Kick</button>
+                <button class="button button-danger" name="action" value="ban" type="submit">Ban</button>
+                <button id="unban" class="button button-quiet" type="button">Unban ID / address</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="card compact-card">
+            <p class="eyebrow">ROUND CONTROL</p>
+            <div class="button-row">
+              <button id="end-round" class="button button-secondary" type="button">End round</button>
+              <button id="end-game" class="button button-danger" type="button">End game</button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <aside class="notice">
+        <span class="notice-icon">i</span>
+        <p><strong>Local-only dashboard.</strong> It listens on this PC only. Map vehicle/weapon sets control map pickups for the next game; this does not spawn objects during a live match.</p>
+      </aside>
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </main>
+    </div>
+  </body>
+</html>

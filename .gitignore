@@ -1,0 +1,11 @@
+node_modules/
+dist/
+config.json
+.env
+.env.*
+*.pfx
+*.p12
+*.dpapi
+panel-auth.json
+panel-connection.json
+connections.json

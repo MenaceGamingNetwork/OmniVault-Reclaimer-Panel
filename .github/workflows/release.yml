@@ -1,0 +1,46 @@
+name: Publish Windows beta
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-publish:
+    runs-on: windows-latest
+    steps:
+      - name: Check out private source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build unsigned Windows installer
+        run: npx electron-builder --win nsis --publish never
+
+      - name: Publish binary-only release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPO_TOKEN }}
+          RELEASE_REPO: MenaceGamingNetwork/OmniVault-Reclaimer-Control-Releases
+        run: |
+          $assets = @(Get-ChildItem -LiteralPath dist -File | Where-Object {
+            $_.Extension -in @(".exe", ".blockmap", ".yml", ".yaml")
+          })
+          if (-not ($assets.Name -match "\.yml$")) {
+            throw "electron-builder did not produce an update manifest."
+          }
+          $assetPaths = @($assets | ForEach-Object { $_.FullName })
+          & gh release create "${{ github.ref_name }}" @assetPaths --repo $env:RELEASE_REPO --prerelease --generate-notes
+          if ($LASTEXITCODE -ne 0) {
+            throw "GitHub release upload failed."
+          }

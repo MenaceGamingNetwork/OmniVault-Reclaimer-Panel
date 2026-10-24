@@ -1,0 +1,13 @@
+{
+  "token": "PUT_YOUR_BOT_TOKEN_HERE",
+  "applicationId": "PUT_YOUR_APPLICATION_ID_HERE",
+  "guildId": "PUT_YOUR_SERVER_GUILD_ID_HERE",
+  "statusChannelId": "PUT_CHANNEL_ID_FOR_STATUS_EMBED_HERE",
+  "alertsChannelId": "PUT_CHANNEL_ID_FOR_JOIN_LEAVE_ALERTS_HERE",
+  "servers": [
+    { "label": "Battlefront", "rcon": "OmniVault 24/7 Starwars Battlefront" },
+    { "label": "UNSC vs Covenant", "rcon": "OmniVault 24/7 UNSC vs Covenant" }
+  ],
+  "pollSeconds": 30,
+  "statusSeconds": 60
+}

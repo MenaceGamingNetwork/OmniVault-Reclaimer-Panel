@@ -1,0 +1,56 @@
+{
+  "name": "omnivault-reclaimer-control",
+  "version": "0.1.0-beta.1",
+  "description": "Windows desktop control client for self-hosted Project Reclaimer servers",
+  "author": "MenaceGamingNetwork",
+  "main": "index.js",
+  "scripts": {
+    "panel": "node web-panel.js",
+    "desktop:dev": "electron desktop/main.js",
+    "desktop:build": "electron-builder --win nsis",
+    "desktop:publish": "electron-builder --win nsis --publish always",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "discord.js": "^14.27.0",
+    "electron-updater": "^6.8.11"
+  },
+  "devDependencies": {
+    "electron": "^45.0.0",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "com.menacegamingnetwork.omnivaultreclaimercontrol",
+    "productName": "OmniVault Reclaimer Control",
+    "extraMetadata": {
+      "main": "desktop/main.js"
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "desktop/**/*"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "MenaceGamingNetwork",
+      "repo": "OmniVault-Reclaimer-Control-Releases",
+      "releaseType": "release",
+      "channel": "beta"
+    }
+  }
+}
