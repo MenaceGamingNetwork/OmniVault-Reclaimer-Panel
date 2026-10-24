@@ -20,11 +20,11 @@
 
       <section class="card">
         <h2>Add a server</h2>
-        <p class="muted">Get the HTTPS address and SHA-256 certificate fingerprint from that server’s agent setup.</p>
+        <p class="muted">Enter the HTTPS address and SHA-256 certificate fingerprint shown by that server’s agent setup.</p>
         <form id="connection-form">
           <label>Display name<input name="label" maxlength="64" required placeholder="My Halo server"></label>
-          <label>HTTPS address<input name="serverOrigin" type="url" required placeholder="https://server.example:8788"></label>
-          <label>SHA-256 certificate fingerprint<input name="certificateFingerprint" required placeholder="64 hexadecimal characters"></label>
+          <label>Server agent HTTPS address<input name="serverOrigin" type="url" required placeholder="https://server.example:8788"></label>
+          <label>Agent SHA-256 certificate fingerprint<input name="certificateFingerprint" required placeholder="64 hexadecimal characters"></label>
           <button class="primary" type="submit">Save server</button>
           <p id="form-error" class="error" role="alert" hidden></p>
         </form>
