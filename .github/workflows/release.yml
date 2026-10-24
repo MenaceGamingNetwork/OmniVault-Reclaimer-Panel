@@ -30,8 +30,8 @@ jobs:
       - name: Publish binary-only release
         shell: pwsh
         env:
-          GH_TOKEN: ${{ secrets.RELEASE_REPO_TOKEN }}
-          RELEASE_REPO: MenaceGamingNetwork/OmniVault-Reclaimer-Control-Releases
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_REPO: MenaceGamingNetwork/OmniVault-Reclaimer-Panel
         run: |
           $assets = @(Get-ChildItem -LiteralPath dist -File | Where-Object {
             $_.Extension -in @(".exe", ".blockmap", ".yml", ".yaml")
