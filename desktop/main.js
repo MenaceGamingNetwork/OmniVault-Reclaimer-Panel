@@ -1,6 +1,7 @@
 'use strict';
 
-const { app, BrowserWindow, Menu, ipcMain, autoUpdater } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
+const { autoUpdater } = require('electron-updater');
 const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -177,6 +178,11 @@ app.whenReady().then(async () => {
           accelerator: 'Ctrl+Shift+S',
           click: showConnectionManager,
         },
+         {
+           label: 'Check for updates',
+           click: () => autoUpdater.checkForUpdatesAndNotify().catch((error) => console.error(error.message)),
+         },
+
         { role: 'quit' },
       ],
     },
